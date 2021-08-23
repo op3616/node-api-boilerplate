@@ -4,7 +4,7 @@ import express from 'express';
 import validate from '../../middlewares/validate';
 
 // validations
-import * as validations from '../../validations/example';
+import * as userValidation from '../../validations/userValidation';
 
 // controllers
 import * as userController from '../../controllers/userController';
@@ -12,10 +12,11 @@ import * as userController from '../../controllers/userController';
 const router = express.Router();
 
 router.get('/', userController.getUsers);
+
 router.post(
-  '/validate-example',
-  validate(validations.validateExample),
-  userController.validateFormExample
+  '/register',
+  validate(userValidation.createUser),
+  userController.createUser
 );
 
 export default router;

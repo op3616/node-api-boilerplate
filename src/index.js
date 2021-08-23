@@ -1,8 +1,21 @@
-import app from './app';
+import express from 'express';
+
 import logger from './config/logger';
 import config from './config';
 
-function startApp() {
+import appLoader from './loaders';
+
+async function startServer() {
+  const app = express();
+
+  /**
+   * A little hack here
+   * Import/Export can only be used in 'top-level code'
+   * Well, at least in node 10 without babel and at the time of writing
+   * So we are using good old require.
+   * */
+  await appLoader({ expressApp: app });
+
   app.listen(config.port, () => {
     logger.info(
       `🔊 Server on listening at http://localhost:${config.port} in ${config.env} mode`
@@ -36,4 +49,4 @@ function startApp() {
   });
 }
 
-startApp();
+startServer();

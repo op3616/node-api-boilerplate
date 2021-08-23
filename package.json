@@ -10,7 +10,17 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/index.js",
-    "transpile": "babel ./src --out-dir dist"
+    "transpile": "babel ./src --out-dir dist",
+    "test": "jest -i --colors --verbose --detectOpenHandles",
+    "test:watch": "jest -i --watchAll",
+    "coverage": "jest -i --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check **/*.js",
+    "prettier:fix": "prettier --write **/*.js",
+    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -21,7 +31,9 @@
     "express-rate-limit": "^5.3.0",
     "helmet": "^4.6.0",
     "joi": "^17.4.2",
+    "mongoose": "^5.13.7",
     "morgan": "^1.10.0",
+    "validator": "^13.6.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -36,6 +48,8 @@
     "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-security": "^1.4.0"
+    "eslint-plugin-security": "^1.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2"
   }
 }

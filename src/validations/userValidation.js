@@ -1,8 +1,8 @@
 import Joi from 'joi';
 
-export const validateExample = {
+export const createUser = {
   body: Joi.object().keys({
     name: Joi.string().required(),
-    age: Joi.number().required(),
+    email: Joi.string().required().email(),
   }),
 };

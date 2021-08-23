@@ -1,11 +1,9 @@
 import Joi from 'joi';
 
-import { HTTP_CODE } from '../config/constants';
+import { HTTP_CODE, errorJoiMessages } from '../config/constants';
 
 import ApiError from '../utils/apiError';
 import pick from '../utils/pick';
-
-import { errorJoiMessages } from '../config/constants';
 
 const validate = (schema) => (req, res, next) => {
   const validSchema = pick(schema, ['params', 'query', 'body']);

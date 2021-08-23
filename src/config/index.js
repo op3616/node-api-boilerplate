@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import fs from 'fs';
 import Joi from 'joi';
 
@@ -29,9 +30,10 @@ const dotenvFiles = [
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.  Variable expansion is supported in .env files.
 dotenvFiles.forEach((dotenvFile) => {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   if (fs.existsSync(dotenvFile)) {
-    require('dotenv-expand')(
-      require('dotenv').config({
+    dotenvExpand(
+      dotenv.config({
         path: dotenvFile,
       })
     );
@@ -58,4 +60,12 @@ if (error) {
 export default {
   env: envs.NODE_ENV,
   port: envs.PORT,
+  mongoose: {
+    url: envs.MONGODB_URI,
+    options: {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  },
 };

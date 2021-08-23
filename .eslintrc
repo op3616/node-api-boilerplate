@@ -11,7 +11,10 @@
   "rules": {
     "no-console": "error",
     "func-names": "off",
+    "import/prefer-default-export": 0,
+    "no-unused-vars": 1,
     "no-underscore-dangle": "off",
+    "no-param-reassign": 0,
     "consistent-return": "off",
     "jest/expect-expect": "off",
     "security/detect-object-injection": "off"
