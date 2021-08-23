@@ -1,22 +1,12 @@
 import express from 'express';
 
-// middlewares
-import validate from '../../middlewares/validate';
-
-// validations
-import * as userValidation from '../../validations/userValidation';
-
 // controllers
 import * as userController from '../../controllers/userController';
 
+import auth from '../../middlewares/auth';
+
 const router = express.Router();
 
-router.get('/', userController.getUsers);
-
-router.post(
-  '/register',
-  validate(userValidation.createUser),
-  userController.createUser
-);
+router.get('/', auth(), userController.getUser);
 
 export default router;

@@ -61,6 +61,13 @@ export const HTTP_CODE = {
   NETWORK_AUTHENTICATION_REQUIRED: 511,
 };
 
+export const tokenTypes = {
+  ACCESS: 'access',
+  REFRESH: 'refresh',
+  RESET_PASSWORD: 'resetPassword',
+  VERIFY_EMAIL: 'verifyEmail',
+};
+
 export const errorJoiMessages = {
   'alternatives.all': '{{#label}} does not match all of the required types',
   'alternatives.any': '{{#label}} does not match any of the allowed types',

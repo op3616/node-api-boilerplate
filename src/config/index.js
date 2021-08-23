@@ -68,4 +68,11 @@ export default {
       useUnifiedTopology: true,
     },
   },
+  jwt: {
+    secret: envs.JWT_SECRET,
+    accessExpirationMinutes: envs.JWT_ACCESS_EXPIRATION_MINUTES,
+    refreshExpirationDays: envs.JWT_REFRESH_EXPIRATION_DAYS,
+    resetPasswordExpirationMinutes: envs.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
+    verifyEmailExpirationMinutes: envs.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
+  },
 };

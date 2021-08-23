@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
+import passport from 'passport';
 
 // routes
 import routes from '../routes/v1';
@@ -15,6 +16,7 @@ import authLimiter from '../utils/rateLimiter';
 import { HTTP_CODE } from '../config/constants';
 import config from '../config';
 import morgan from '../config/morgan';
+import { jwtStrategy } from '../config/passport';
 
 const expressLoader = ({ app }) => {
   if (config.env !== 'test') {
@@ -40,6 +42,10 @@ const expressLoader = ({ app }) => {
   // enable cors
   app.use(cors());
   app.options('*', cors());
+
+  // jwt authentication
+  app.use(passport.initialize());
+  passport.use('jwt', jwtStrategy);
 
   // limit repeated failed requests to auth endpoints
   if (config.env === 'production') {

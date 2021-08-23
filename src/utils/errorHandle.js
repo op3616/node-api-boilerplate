@@ -1,5 +1,5 @@
-import { HTTP_CODE } from '../config/constants';
 import ApiError from './apiError';
+import { HTTP_CODE } from '../config/constants';
 import logger from '../config/logger';
 import config from '../config';
 
