@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
+import Joi from 'joi';
 
 import paths from './paths';
 
@@ -37,7 +38,24 @@ dotenvFiles.forEach((dotenvFile) => {
   }
 });
 
+const envSchema = Joi.object()
+  .keys({
+    NODE_ENV: Joi.string()
+      .valid('production', 'development', 'test')
+      .required(),
+    PORT: Joi.number().default(8080),
+  })
+  .unknown();
+
+const { value: envs, error } = envSchema
+  .prefs({ errors: { label: 'key' } })
+  .validate(process.env);
+
+if (error) {
+  throw new Error(`Config validation error: ${error.message}`);
+}
+
 export default {
-  env: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 8080,
+  env: envs.NODE_ENV,
+  port: envs.PORT,
 };

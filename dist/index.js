@@ -4,11 +4,13 @@ var _app = _interopRequireDefault(require("./app"));
 
 var _logger = _interopRequireDefault(require("./config/logger"));
 
+var _config = _interopRequireDefault(require("./config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function startApp() {
-  _app["default"].listen(config.port, function () {
-    _logger["default"].info("Listening to port ".concat(config.port));
+  _app["default"].listen(_config["default"].port, function () {
+    _logger["default"].info("\uD83D\uDD0A Server on listening at http://localhost:".concat(_config["default"].port, " in ").concat(_config["default"].env, " mode"));
   });
 
   var exitHandler = function exitHandler() {

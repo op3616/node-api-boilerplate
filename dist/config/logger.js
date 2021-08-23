@@ -5,11 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var winston = require('winston');
+var _winston = _interopRequireDefault(require("winston"));
 
-var config = require('./config');
+var _index = _interopRequireDefault(require("./index"));
 
-var enumerateErrorFormat = winston.format(function (info) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var enumerateErrorFormat = _winston["default"].format(function (info) {
   if (info instanceof Error) {
     Object.assign(info, {
       message: info.stack
@@ -18,16 +20,18 @@ var enumerateErrorFormat = winston.format(function (info) {
 
   return info;
 });
-var logger = winston.createLogger({
-  level: config.env === 'development' ? 'debug' : 'info',
-  format: winston.format.combine(enumerateErrorFormat(), config.env === 'development' ? winston.format.colorize() : winston.format.uncolorize(), winston.format.splat(), winston.format.printf(function (_ref) {
+
+var logger = _winston["default"].createLogger({
+  level: _index["default"].env === 'development' ? 'debug' : 'info',
+  format: _winston["default"].format.combine(enumerateErrorFormat(), _index["default"].env === 'development' ? _winston["default"].format.colorize() : _winston["default"].format.uncolorize(), _winston["default"].format.splat(), _winston["default"].format.printf(function (_ref) {
     var level = _ref.level,
         message = _ref.message;
     return "".concat(level, ": ").concat(message);
   })),
-  transports: [new winston.transports.Console({
+  transports: [new _winston["default"].transports.Console({
     stderrLevels: ['error']
   })]
 });
+
 var _default = logger;
 exports["default"] = _default;

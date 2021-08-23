@@ -3,10 +3,15 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 
+// routes
+import routes from './routes/v1';
+
+// file utils
 import { errorConverter, errorHandler } from './utils/errorHandle';
 import ApiError from './utils/apiError';
 import authLimiter from './utils/rateLimiter';
 
+// file config
 import { HTTP_CODE } from './config/constants';
 import config from './config';
 import morgan from './config/morgan';
@@ -46,6 +51,9 @@ if (config.env === 'production') {
 app.get('/', (req, res) => {
   res.send('hello world');
 });
+
+// v1 api routes
+app.use('/v1', routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
