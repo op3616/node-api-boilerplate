@@ -15,7 +15,26 @@ const verifyCallback =
     req.userData = user;
 
     if (requiredRights.length) {
+      // get all role rights from
       const userRights = roleRights.get(user.role);
+
+      if (!Array.isArray(userRights)) {
+        return reject(
+          new ApiError(
+            HTTP_CODE.INTERNAL_SERVER_ERROR,
+            'User right must be an array'
+          )
+        );
+      }
+
+      // check if user has full authority
+      const hasFullAuthority = userRights.some(
+        (userRight) => userRight === 'all'
+      );
+      if (hasFullAuthority) {
+        return resolve();
+      }
+
       const hasRequiredRights = requiredRights.every((requireRight) =>
         userRights.includes(requireRight)
       );

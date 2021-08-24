@@ -3,6 +3,9 @@ import validator from 'validator';
 
 import { roles } from '../config/roles';
 
+import paginate from './plugins/paginatePlugin';
+import toJSON from './plugins/toJSONPlugin';
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -50,6 +53,10 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// add plugin that converts mongoose to json
+userSchema.plugin(toJSON);
+userSchema.plugin(paginate);
 
 /**
  * @typedef User

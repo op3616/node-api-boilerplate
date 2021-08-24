@@ -35,3 +35,13 @@ export const login = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const refreshToken = async (req, res, next) => {
+  try {
+    const tokens = await authService.refreshAuth(req.body.refreshToken);
+
+    res.status(200).json({ ...tokens });
+  } catch (error) {
+    next(error);
+  }
+};

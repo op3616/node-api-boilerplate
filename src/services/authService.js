@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
-import { HTTP_CODE } from '../config/constants';
+import { HTTP_CODE, tokenTypes } from '../config/constants';
 import ApiError from '../utils/apiError';
 
 import * as userService from './userService';
+import * as tokenService from './tokenService';
 
 /**
  * Login with username and password
@@ -20,4 +21,23 @@ export const login = async (email, password) => {
   }
 
   return user;
+};
+
+export const refreshAuth = async (refreshToken) => {
+  try {
+    const getRefreshToken = await tokenService.verifyToken(
+      refreshToken,
+      tokenTypes.REFRESH
+    );
+    const getUser = await userService.getUserById(getRefreshToken.user);
+
+    if (!getUser) {
+      throw new Error();
+    }
+
+    await getRefreshToken.remove();
+    return tokenService.generateAuthToken(getUser);
+  } catch (error) {
+    throw new ApiError(HTTP_CODE.UNAUTHORIZED, 'Please authenticate');
+  }
 };

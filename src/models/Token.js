@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import { tokenTypes } from '../config/constants';
+import toJSON from './plugins/toJSONPlugin';
 
 const tokenSchema = new mongoose.Schema(
   {
@@ -36,6 +37,9 @@ const tokenSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// add plugin that converts mongoose to json
+tokenSchema.plugin(toJSON);
 
 /**
  * @typedef Token

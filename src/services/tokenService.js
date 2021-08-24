@@ -66,7 +66,7 @@ export const generateAuthToken = async (user) => {
     'minutes'
   );
   const accessToken = await generateToken(
-    user._id,
+    user.id,
     accessTokenExpires,
     tokenTypes.ACCESS
   );
@@ -75,14 +75,14 @@ export const generateAuthToken = async (user) => {
     'days'
   );
   const refreshToken = await generateToken(
-    user._id,
+    user.id,
     refreshTokenExpires,
     tokenTypes.REFRESH
   );
 
   await saveToken(
     refreshToken,
-    user._id,
+    user.id,
     refreshTokenExpires,
     tokenTypes.REFRESH
   );
@@ -97,4 +97,20 @@ export const generateAuthToken = async (user) => {
       expires: refreshTokenExpires.toDate(),
     },
   };
+};
+
+export const verifyToken = async (token, type) => {
+  const payload = jwt.verify(token, config.jwt.secret);
+  const getToken = await Token.findOne({
+    token,
+    type,
+    user: payload.sub,
+    blacklisted: false,
+  });
+
+  if (!getToken) {
+    throw new Error('Token not found');
+  }
+
+  return getToken;
 };

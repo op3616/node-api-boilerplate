@@ -22,3 +22,12 @@ export const createUser = async (userBody) => {
 export const getUserByEmail = async (email) => {
   return User.findOne({ email });
 };
+
+/**
+ * Get user by id
+ * @param {string} id
+ * @returns {Promise<User>}
+ */
+export const getUserById = async (id) => {
+  return User.findById(id);
+};
