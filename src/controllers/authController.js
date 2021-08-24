@@ -3,7 +3,7 @@ import * as userService from '../services/userService';
 import * as authService from '../services/authService';
 import * as tokenService from '../services/tokenService';
 
-export const register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const existEmail = await userService.getUserByEmail(req.body.email);
 
@@ -23,7 +23,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -36,7 +36,17 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const refreshToken = async (req, res, next) => {
+const logout = async (req, res, next) => {
+  try {
+    await authService.logout(req.body.refreshToken);
+
+    return res.status(200).json({ message: 'Log out success' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const refreshToken = async (req, res, next) => {
   try {
     const tokens = await authService.refreshAuth(req.body.refreshToken);
 
@@ -45,3 +55,17 @@ export const refreshToken = async (req, res, next) => {
     next(error);
   }
 };
+
+const resetPassword = async (req, res, next) => {
+  try {
+    await authService.resetPassword(req.query.token, req.body.password);
+
+    return res
+      .status(HTTP_CODE.NO_CONTENT)
+      .json({ message: 'Reset password success' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { register, login, logout, refreshToken, resetPassword };
