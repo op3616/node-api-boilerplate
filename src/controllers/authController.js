@@ -4,7 +4,7 @@ import * as authService from '../services/authService';
 import * as tokenService from '../services/tokenService';
 import * as emailService from '../services/emailService';
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const existEmail = await userService.getUserByEmail(req.body.email);
 
@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
     return res.status(HTTP_CODE.CREATED).send(user);
   } catch (error) {
-    return res.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send({ error });
+    next(error);
   }
 };
 
