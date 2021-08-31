@@ -16,12 +16,7 @@ import ApiError from '../utils/apiError';
  * @param {string} [secret]
  * @returns {string}
  */
-const generateToken = async (
-  userId,
-  expires,
-  type,
-  secret = config.jwt.secret
-) => {
+const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
   const payload = {
     sub: userId,
     iat: moment().unix(),
@@ -132,7 +127,7 @@ const generateResetPasswordToken = async (email) => {
     config.jwt.resetPasswordExpirationMinutes,
     'minutes'
   );
-  const resetPasswordToken = generateToken(
+  const resetPasswordToken = await generateToken(
     user.id,
     expires,
     tokenTypes.RESET_PASSWORD
@@ -147,10 +142,30 @@ const generateResetPasswordToken = async (email) => {
   return resetPasswordToken;
 };
 
+/**
+ * Generate verify email token
+ * @param {User} user
+ * @returns {Promise<string>}
+ */
+const generateVerifyEmailToken = async (user) => {
+  const expires = moment().add(
+    config.jwt.verifyEmailExpirationMinutes,
+    'minutes'
+  );
+  const verifyEmailToken = await generateToken(
+    user.id,
+    expires,
+    tokenTypes.VERIFY_EMAIL
+  );
+  await saveToken(verifyEmailToken, user.id, expires, tokenTypes.VERIFY_EMAIL);
+  return verifyEmailToken;
+};
+
 export {
   generateToken,
   saveToken,
   generateAuthToken,
   verifyToken,
   generateResetPasswordToken,
+  generateVerifyEmailToken,
 };

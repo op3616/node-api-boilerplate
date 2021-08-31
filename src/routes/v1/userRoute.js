@@ -10,16 +10,18 @@ import * as userValidation from '../../validations/userValidation';
 
 const router = express.Router();
 
-router.post(
-  '/create',
-  validate(userValidation.createUser),
-  userController.createUser
-);
-
 router.get(
-  '/all',
+  '/',
+  auth('getUser'),
   validate(userValidation.getAllUsers),
   userController.getAllUsers
+);
+
+router.post(
+  '/create',
+  auth('manageUsers'),
+  validate(userValidation.createUser),
+  userController.createUser
 );
 
 router.get(
@@ -31,12 +33,14 @@ router.get(
 
 router.patch(
   '/:userId',
+  auth('getUser'),
   validate(userValidation.updateUser),
   userController.updateUser
 );
 
 router.delete(
   '/:userId',
+  auth('getUser'),
   validate(userValidation.deleteUser),
   userController.deleteUser
 );

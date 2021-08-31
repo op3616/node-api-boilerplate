@@ -16,13 +16,13 @@ const login = async (email, password) => {
   const user = await userService.getUserByEmail(email);
 
   if (!user) {
-    throw new ApiError(HTTP_CODE.BAD_REQUEST, 'Email does not match');
+    throw new ApiError(HTTP_CODE.UNAUTHORIZED, 'Incorrect user');
   }
 
   const matchPassword = await bcrypt.compare(password, user.password);
 
   if (!matchPassword) {
-    throw new ApiError(HTTP_CODE.BAD_REQUEST, 'Password does not match');
+    throw new ApiError(HTTP_CODE.UNAUTHORIZED, 'Incorrect password');
   }
 
   return user;
@@ -87,11 +87,36 @@ const resetPassword = async (resetPasswordToken, newPassword) => {
     if (!user) {
       throw new Error('Error to find user');
     }
-    await userService.updateUserById(user.id, { password: newPassword });
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
+
+    await userService.updateUserById(user.id, { password: hash });
     await Token.deleteMany({ user: user.id, type: tokenTypes.RESET_PASSWORD });
   } catch (error) {
     throw new ApiError(HTTP_CODE.UNAUTHORIZED, 'Password reset failed');
   }
 };
 
-export { login, logout, resetPassword, refreshAuth };
+/**
+ * Verify email
+ * @param {string} verifyEmailToken
+ * @returns {Promise}
+ */
+const verifyEmail = async (verifyEmailToken) => {
+  try {
+    const verifyEmailTokenDoc = await tokenService.verifyToken(
+      verifyEmailToken,
+      tokenTypes.VERIFY_EMAIL
+    );
+    const user = await userService.getUserById(verifyEmailTokenDoc.user);
+    if (!user) {
+      throw new Error();
+    }
+    await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL });
+    await userService.updateUserById(user.id, { isEmailVerified: true });
+  } catch (error) {
+    throw new ApiError(HTTP_CODE.UNAUTHORIZED, 'Email verification failed');
+  }
+};
+
+export { login, logout, resetPassword, refreshAuth, verifyEmail };

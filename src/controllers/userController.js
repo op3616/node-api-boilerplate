@@ -11,12 +11,12 @@ const createUser = async (req, res, next) => {
     if (existUser) {
       return res
         .status(HTTP_CODE.BAD_REQUEST)
-        .json({ message: 'User already created' });
+        .send({ message: 'User already created' });
     }
 
     const user = await userService.createUser(req.body);
 
-    return res.status(HTTP_CODE.CREATED).send({ user });
+    return res.status(HTTP_CODE.CREATED).send(user);
   } catch (error) {
     next(error);
   }
@@ -29,7 +29,7 @@ const getAllUsers = async (req, res, next) => {
 
     const data = await userService.queryUsers(filter, options);
 
-    res.status(HTTP_CODE.OK).json({ data });
+    res.status(HTTP_CODE.OK).send(data);
   } catch (error) {
     next(error);
   }
@@ -43,7 +43,7 @@ const getUser = async (req, res, next) => {
       throw new ApiError(HTTP_CODE.NOT_FOUND, 'User not found');
     }
 
-    return res.status(HTTP_CODE.OK).json({ user });
+    return res.status(HTTP_CODE.OK).send(user);
   } catch (error) {
     next(error);
   }
@@ -51,9 +51,9 @@ const getUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    await userService.updateUserById(req.params.userId, req.body);
+    const user = await userService.updateUserById(req.params.userId, req.body);
 
-    res.status(HTTP_CODE.OK).json({ message: 'Updated successfully' });
+    res.status(HTTP_CODE.OK).send(user);
   } catch (error) {
     next(error);
   }
@@ -63,7 +63,7 @@ const deleteUser = async (req, res, next) => {
   try {
     await userService.deleteUserById(req.params.userId);
 
-    res.status(HTTP_CODE.OK).json({ message: 'Deleted successfully' });
+    res.status(HTTP_CODE.OK).send({ message: 'User deleted' });
   } catch (error) {
     next(error);
   }

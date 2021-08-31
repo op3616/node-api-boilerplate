@@ -8,7 +8,7 @@ import passport from 'passport';
 import routes from '../routes/v1';
 
 // file utils
-import { errorConverter, errorHandler } from '../utils/errorHandle';
+import { errorConverter, errorHandler } from '../utils/errors';
 import ApiError from '../utils/apiError';
 import authLimiter from '../utils/rateLimiter';
 
@@ -70,6 +70,8 @@ const expressLoader = ({ app }) => {
 
   // handle error
   app.use(errorHandler);
+
+  return app;
 };
 
 export default expressLoader;

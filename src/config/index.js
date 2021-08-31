@@ -75,4 +75,14 @@ export default {
     resetPasswordExpirationMinutes: envs.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
     verifyEmailExpirationMinutes: envs.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
   },
+  email: {
+    smtp: {
+      service: envs.SMTP_SERVICE,
+      auth: {
+        user: envs.SMTP_USER,
+        pass: envs.SMTP_PASSWORD,
+      },
+    },
+    from: envs.EMAIL_FROM,
+  },
 };
