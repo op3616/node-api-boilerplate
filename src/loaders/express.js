@@ -14,7 +14,7 @@ import authLimiter from '../utils/rateLimiter';
 
 // file config
 import { HTTP_CODE } from '../config/constants';
-import config from '../config';
+import config from '../config/secrets';
 import morgan from '../config/morgan';
 import { jwtStrategy } from '../config/passport';
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
 
-import config from '../config';
+import config from '../config/secrets';
 import { tokenTypes, HTTP_CODE } from '../config/constants';
 
 import * as userService from './userService';

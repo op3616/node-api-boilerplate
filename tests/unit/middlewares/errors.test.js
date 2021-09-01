@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import httpMocks from 'node-mocks-http';
 
-import config from '../../../src/config';
+import config from '../../../src/config/secrets';
 import { HTTP_CODE } from '../../../src/config/constants';
 import logger from '../../../src/config/logger';
 import ApiError from '../../../src/utils/apiError';

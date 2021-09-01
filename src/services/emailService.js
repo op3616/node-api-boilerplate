@@ -1,5 +1,5 @@
 import transport from '../loaders/mailer';
-import config from '../config';
+import config from '../config/secrets';
 
 /**
  * Send an email

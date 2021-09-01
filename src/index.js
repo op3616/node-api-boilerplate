@@ -1,7 +1,7 @@
 import express from 'express';
 
 import logger from './config/logger';
-import config from './config';
+import config from './config/secrets';
 
 import appLoader from './loaders';
 

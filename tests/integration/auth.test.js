@@ -4,7 +4,7 @@ import httpMocks from 'node-mocks-http';
 import moment from 'moment';
 import bcrypt from 'bcrypt';
 
-import config from '../../src/config';
+import config from '../../src/config/secrets';
 import { HTTP_CODE, tokenTypes } from '../../src/config/constants';
 import { roleRights } from '../../src/config/roles';
 import auth from '../../src/middlewares/auth';
