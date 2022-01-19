@@ -8,6 +8,7 @@
   "author": "@op3616",
   "license": "MIT",
   "scripts": {
+    "serve": "node dist/index.js",
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/index.js",
     "transpile": "babel ./src --out-dir dist",

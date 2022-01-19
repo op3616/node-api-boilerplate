@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import config from '../../src/config/secrets';
+import config from '../../src/config/secretKeys';
 import { tokenTypes } from '../../src/config/constants';
 import * as tokenService from '../../src/services/tokenService';
 import { userOne, admin } from './userFixture';

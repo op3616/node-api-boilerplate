@@ -1,8 +1,6 @@
 import express from 'express';
-
 import logger from './config/logger';
-import config from './config/secrets';
-
+import config from './config/secretKeys';
 import appLoader from './loaders';
 
 async function startServer() {

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import httpMocks from 'node-mocks-http';
 
-import config from '../../../src/config/secrets';
+import config from '../../../src/config/secretKeys';
 import { HTTP_CODE } from '../../../src/config/constants';
 import logger from '../../../src/config/logger';
 import ApiError from '../../../src/utils/apiError';
-import { errorConverter, errorHandler } from '../../../src/utils/errors';
+import { errorConverter, errorHandler } from '../../../src/middlewares/errors';
 
 describe('Error middlewares', () => {
   describe('Error converter', () => {

@@ -4,7 +4,7 @@ import httpMocks from 'node-mocks-http';
 import moment from 'moment';
 import bcrypt from 'bcrypt';
 
-import config from '../../src/config/secrets';
+import config from '../../src/config/secretKeys';
 import { HTTP_CODE, tokenTypes } from '../../src/config/constants';
 import { roleRights } from '../../src/config/roles';
 import auth from '../../src/middlewares/auth';
@@ -33,6 +33,7 @@ describe('Auth routes', () => {
         name: faker.name.findName(),
         email: faker.internet.email().toLowerCase(),
         password: 'password1',
+        rePassword: 'password1',
       };
     });
 

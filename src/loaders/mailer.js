@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
-
-import config from '../config/secrets';
+import config from '../config/secretKeys';
 import logger from '../config/logger';
 
 const mailTransportLoader = async () => {
@@ -13,9 +12,7 @@ const mailTransportLoader = async () => {
 
     return transport;
   } catch (error) {
-    logger.warn(
-      'Unable to connect to email server. Make sure you have configured the SMTP options in .env'
-    );
+    logger.warn(error);
   }
 };
 

@@ -5,18 +5,6 @@ import User from '../models/User';
 import ApiError from '../utils/apiError';
 
 /**
- * Create a user
- * @param {Object} userBody
- * @returns {Promise<User>}
- */
-const createUser = async (userBody) => {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(userBody.password, salt);
-
-  return User.create({ ...userBody, password: hash });
-};
-
-/**
  * Get user by email
  * @param {string} email
  * @returns {Promise<User>}
@@ -32,6 +20,24 @@ const getUserByEmail = async (email) => {
  */
 const getUserById = async (id) => {
   return User.findById(id);
+};
+
+/**
+ * Create a user
+ * @param {Object} userBody
+ * @returns {Promise<User>}
+ */
+const createUser = async (userBody) => {
+  const getUser = await getUserByEmail(userBody.email);
+
+  if (getUser) {
+    throw new ApiError(HTTP_CODE.BAD_REQUEST, 'User already created');
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(userBody.password, salt);
+
+  return User.create({ ...userBody, password: hash });
 };
 
 /**

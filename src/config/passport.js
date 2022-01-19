@@ -1,6 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
-import config from './secrets';
+import config from './secretKeys';
 import { tokenTypes } from './constants';
 import User from '../models/User';
 

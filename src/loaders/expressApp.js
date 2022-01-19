@@ -4,21 +4,18 @@ import cors from 'cors';
 import compression from 'compression';
 import passport from 'passport';
 
-// routes
 import routes from '../routes/v1';
 
-// file utils
-import { errorConverter, errorHandler } from '../utils/errors';
+import { errorConverter, errorHandler } from '../middlewares/errors';
+import authLimiter from '../middlewares/rateLimiter';
 import ApiError from '../utils/apiError';
-import authLimiter from '../utils/rateLimiter';
 
-// file config
 import { HTTP_CODE } from '../config/constants';
-import config from '../config/secrets';
-import morgan from '../config/morgan';
 import { jwtStrategy } from '../config/passport';
+import config from '../config/secretKeys';
+import morgan from '../config/morgan';
 
-const expressLoader = ({ app }) => {
+const expressAppLoader = ({ app }) => {
   if (config.env !== 'test') {
     app.use(morgan.successHandler);
     app.use(morgan.errorHandler);
@@ -74,4 +71,4 @@ const expressLoader = ({ app }) => {
   return app;
 };
 
-export default expressLoader;
+export default expressAppLoader;

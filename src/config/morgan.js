@@ -1,6 +1,6 @@
 import morgan from 'morgan';
 
-import config from './secrets';
+import config from './secretKeys';
 import logger from './logger';
 
 morgan.token('message', (req, res) => res.locals.errorMessage || '');

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-import ApiError from './apiError';
+import ApiError from '../utils/apiError';
 import { HTTP_CODE } from '../config/constants';
 import logger from '../config/logger';
-import config from '../config/secrets';
+import config from '../config/secretKeys';
 
 const errorConverter = (err, req, res, next) => {
   let error = err;

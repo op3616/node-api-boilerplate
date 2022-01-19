@@ -1,6 +1,6 @@
 import express from 'express';
 
-import expressLoader from '../../src/loaders/express';
+import expressLoader from '../../src/loaders/expressApp';
 
 const getApp = () => {
   const app = express();

@@ -85,7 +85,7 @@ const resetPassword = async (resetPasswordToken, newPassword) => {
     );
     const user = await userService.getUserById(getResetPasswordToken.user);
     if (!user) {
-      throw new Error('Error to find user');
+      throw new Error();
     }
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(newPassword, salt);

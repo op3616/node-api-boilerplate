@@ -1,4 +1,4 @@
-import expressLoader from './express';
+import expressAppLoader from './expressApp';
 import mongooseLoader from './mongoose';
 import mailTransportLoader from './mailer';
 
@@ -11,7 +11,7 @@ const appLoaders = async ({ expressApp }) => {
   await mailTransportLoader();
   logger.info(`🔊 Connected to email server`);
 
-  await expressLoader({ app: expressApp });
+  await expressAppLoader({ app: expressApp });
   logger.info(`🔊 Express Loaded`);
 };
 
